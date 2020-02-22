@@ -3,10 +3,13 @@ angular.module('storefront.account')
         return $resource('storefrontapi/account', null, {
             updateAccount: { url: 'storefrontapi/account', method: 'POST' },
             changePassword: { url: 'storefrontapi/account/password', method: 'POST' },
-            getQuotes: { url: 'storefrontapi/account/quotes' },
+            searchQuotes: { url: 'storefrontapi/quoterequests/search', method: 'POST' },
             updateAddresses: { url: 'storefrontapi/account/addresses', method: 'POST' },
             getCountries: { url: 'storefrontapi/countries', isArray: true },
-            getCountryRegions: { url: 'storefrontapi/countries/:code3/regions', isArray: true }
+            getCountryRegions: { url: 'storefrontapi/countries/:code3/regions', isArray: true },
+            deletePhoneNumber: { url: "storefrontapi/account/phonenumber", method: "DELETE" },
+            changeTwoFactorAuth: { url: "storefrontapi/account/twofactorauthentification", method: "POST" },
+            updatePhoneNumber: { url: "storefrontapi/account/phonenumber", method: "POST" }
         });
     }])
     .factory('storefront.orderApi', ['$resource', function ($resource) {

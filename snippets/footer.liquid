@@ -8,12 +8,14 @@
         <div class="grid-item medium--one-half large--three-twelfths">
           <h3>{{ 'layout.footer.quick_links' | t }}</h3>
           <ul>
-            {% for link in linklists[settings.footer_quicklinks_linklist].links %}
-              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% if linklists[settings.footer_quicklinks_linklist].links.empty? %}
+            {% capture theme_settings_footer_linklist_path %}<strong>{{ 'layout.footer.footer' | t }}</strong> > <strong>{{ 'layout.footer.quick_links_list' | t }}</strong>{% endcapture %}
+            {{ 'layout.footer.instructions_for_linklist_html' | t: theme_settings_link, theme_settings_footer_linklist_path }}
             {% else %}
-              {% capture theme_settings_footer_linklist_path %}<strong>{{ 'layout.footer.footer' | t }}</strong> > <strong>{{ 'layout.footer.quick_links_list' | t }}</strong>{% endcapture %}
-              {{ 'layout.footer.instructions_for_linklist_html' | t: theme_settings_link: theme_settings_link, theme_settings_footer_linklist_path: theme_settings_footer_linklist_path }}
+            {% for link in linklists[settings.footer_quicklinks_linklist].links %}
+              <li><a href="{{ link.url | absolute_url }}">{{ link.title }}</a></li>
             {% endfor %}
+            {% endif %}
           </ul>
         </div>
       {% endif %}
@@ -21,15 +23,12 @@
       {% if settings.footer_content_enable %}
       <div class="grid-item medium--one-half large--five-twelfths">
         <h3>{{ 'layout.footer.get_in_touch' | t }}</h3>
-        <p>
-            {{ 'layout.footer.footer_content_text' | t }}
-        </p>
 
         {% if settings.footer_social_enable %}
           <ul class="inline-list social-icons">
             {% if settings.social_twitter_link != blank %}
               <li>
-                <a class="icon-fallback-text" href="{{ settings.social_twitter_link }}" title="{{ 'layout.footer.store_on_social_network' | t: store_name: shop.name, social_network: 'Twitter' | escape }}">
+                <a class="icon-fallback-text" href="{{ settings.social_twitter_link }}" title="{{ 'layout.footer.store_on_social_network' | t: shop.name, 'Twitter' | escape }}">
                   <span class="icon icon-twitter" aria-hidden="true"></span>
                   <span class="fallback-text">Twitter</span>
                 </a>
@@ -37,7 +36,7 @@
             {% endif %}
             {% if settings.social_facebook_link != blank %}
               <li>
-                <a class="icon-fallback-text" href="{{ settings.social_facebook_link }}" title="{{ 'layout.footer.store_on_social_network' | t: store_name: shop.name, social_network: 'Facebook' | escape }}">
+                <a class="icon-fallback-text" href="{{ settings.social_facebook_link }}" title="{{ 'layout.footer.store_on_social_network' | t: shop.name, 'Facebook' | escape }}">
                   <span class="icon icon-facebook" aria-hidden="true"></span>
                   <span class="fallback-text">Facebook</span>
                 </a>
@@ -45,7 +44,7 @@
             {% endif %}
             {% if settings.social_pinterest_link != blank %}
               <li>
-                <a class="icon-fallback-text" href="{{ settings.social_pinterest_link }}" title="{{ 'layout.footer.store_on_social_network' | t: store_name: shop.name, social_network: 'Pinterest' | escape }}">
+                <a class="icon-fallback-text" href="{{ settings.social_pinterest_link }}" title="{{ 'layout.footer.store_on_social_network' | t: shop.name, 'Pinterest' | escape }}">
                   <span class="icon icon-pinterest" aria-hidden="true"></span>
                   <span class="fallback-text">Pinterest</span>
                 </a>
@@ -53,7 +52,7 @@
             {% endif %}
             {% if settings.social_google_plus_link != blank %}
               <li>
-                <a class="icon-fallback-text" href="{{ settings.social_google_plus_link }}" title="{{ 'layout.footer.store_on_social_network' | t: store_name: shop.name, social_network: 'Google' | escape }}">
+                <a class="icon-fallback-text" href="{{ settings.social_google_plus_link }}" title="{{ 'layout.footer.store_on_social_network' | t:  shop.name,  'Google' | escape }}">
                   <span class="icon icon-google" aria-hidden="true"></span>
                   <span class="fallback-text">Google</span>
                 </a>
@@ -61,7 +60,7 @@
             {% endif %}
             {% if settings.social_instagram_link != blank %}
               <li>
-                <a class="icon-fallback-text" href="{{ settings.social_instagram_link }}" title="{{ 'layout.footer.store_on_social_network' | t: store_name: shop.name, social_network: 'Instagram' | escape }}">
+                <a class="icon-fallback-text" href="{{ settings.social_instagram_link }}" title="{{ 'layout.footer.store_on_social_network' | t:  shop.name, 'Instagram' | escape }}">
                   <span class="icon icon-instagram" aria-hidden="true"></span>
                   <span class="fallback-text">Instagram</span>
                 </a>
@@ -69,7 +68,7 @@
             {% endif %}
             {% if settings.social_tumblr_link != blank %}
               <li>
-                <a class="icon-fallback-text" href="{{ settings.social_tumblr_link }}" title="{{ 'layout.footer.store_on_social_network' | t: store_name: shop.name, social_network: 'Tumblr' | escape }}">
+                <a class="icon-fallback-text" href="{{ settings.social_tumblr_link }}" title="{{ 'layout.footer.store_on_social_network' | t:  shop.name,  'Tumblr' | escape }}">
                   <span class="icon icon-tumblr" aria-hidden="true"></span>
                   <span class="fallback-text">Tumblr</span>
                 </a>
@@ -77,7 +76,7 @@
             {% endif %}
             {% if settings.social_youtube_link != blank %}
               <li>
-                <a class="icon-fallback-text" href="{{ settings.social_youtube_link }}" title="{{ 'layout.footer.store_on_social_network' | t: store_name: shop.name, social_network: 'YouTube' | escape }}">
+                <a class="icon-fallback-text" href="{{ settings.social_youtube_link }}" title="{{ 'layout.footer.store_on_social_network' | t:  shop.name,  'YouTube' | escape }}">
                   <span class="icon icon-youtube" aria-hidden="true"></span>
                   <span class="fallback-text">YouTube</span>
                 </a>
@@ -85,7 +84,7 @@
             {% endif %}
             {% if settings.social_vimeo_link != blank %}
               <li>
-                <a class="icon-fallback-text" href="{{ settings.social_vimeo_link }}" title="{{ 'layout.footer.store_on_social_network' | t: store_name: shop.name, social_network: 'Vimeo' | escape }}">
+                <a class="icon-fallback-text" href="{{ settings.social_vimeo_link }}" title="{{ 'layout.footer.store_on_social_network' | t:  shop.name,  'Vimeo' | escape }}">
                   <span class="icon icon-vimeo" aria-hidden="true"></span>
                   <span class="fallback-text">Vimeo</span>
                 </a>
@@ -93,7 +92,7 @@
             {% endif %}
             {% if settings.social_fancy_link != blank %}
               <li>
-                <a class="icon-fallback-text" href="{{ settings.social_fancy_link }}" title="{{ 'layout.footer.store_on_social_network' | t: store_name: shop.name, social_network: 'Fancy' | escape }}">
+                <a class="icon-fallback-text" href="{{ settings.social_fancy_link }}" title="{{ 'layout.footer.store_on_social_network' | t:  shop.name,  'Fancy' | escape }}">
                   <span class="icon icon-fancy" aria-hidden="true"></span>
                   <span class="fallback-text">Fancy</span>
                 </a>
@@ -119,16 +118,16 @@
         {% if settings.footer_legallinks_enable %}
           <ul class="legal-links inline-list">
             {% for link in linklists[settings.footer_legallinks_linklist].links %}
-              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              <li><a href="{{ link.url | absolute_url }}">{{ link.title }}</a></li>
             {% endfor %}
           </ul>
         {% endif %}
         <ul class="legal-links inline-list">
           <li>
-            &copy; {{ 'now' | date: "%Y" }} {{ shop.name }}
+            &copy; {{ 'now' | date: "yyyy" }} {{ shop.name }}
           </li>
           <li>
-              {{ powered_by_link }}
+              {{ powered_by shop.name }}
           </li>
         </ul>
       </div>

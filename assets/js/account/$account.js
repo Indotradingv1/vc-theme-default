@@ -40,7 +40,7 @@ angular.module(moduleName, ['ngResource', 'ngComponentRouter', 'credit-cards', '
 
         $ctrl.getQuotes = function (pageNumber, pageSize, sortInfos, callback) {
             loader.wrapLoading(function () {
-                return accountApi.getQuotes({ pageNumber: pageNumber, pageSize: pageSize, sortInfos: sortInfos }, callback).$promise;
+                return accountApi.searchQuotes({ pageNumber: pageNumber, pageSize: pageSize }, callback).$promise;
             });
         };
 
@@ -66,6 +66,18 @@ angular.module(moduleName, ['ngResource', 'ngComponentRouter', 'credit-cards', '
             return loader.wrapLoading(function () {
                 return accountApi.changePassword(changePasswordData).$promise;
             });
+        };
+
+        $ctrl.deletePhoneNumber = function () {
+            return accountApi.deletePhoneNumber().$promise;
+        };
+
+        $ctrl.changeTwoFactorAuth = function (enabled) {
+            return accountApi.changeTwoFactorAuth({ enabled: enabled }).$promise;
+        };
+
+        $ctrl.updatePhoneNumber = function (number) {
+            return accountApi.updatePhoneNumber({phoneNumber: number}).$promise;
         };
     }]
 })

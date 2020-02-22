@@ -1,5 +1,5 @@
 <script id="storefront.recently-added-list-item-dialog.tpl" type="text/ng-template">
-    <div class="ajaxify-modal is-visible" id="ajaxifyModal" style="opacity: 1;" ng-init="">
+    <div class="ajaxify-modal is-visible" id="ajaxifyModal" style="opacity: 1;" ng-init='initialize({{ settings.lists | json }})'>
         <button class="ajaxifyCart--close" title="{{ 'dialog.close_cart' | t }}" ng-click="close()">{{ 'cart.general.close_cart' | t }}</button>
         <div class="ajaxifyCart--content" id="ajaxifyCart">
             <div ng-if="!itemAdded" class="product-list-modal-wrapper">
@@ -53,7 +53,7 @@
 
                                 </div>
                                 <div class="product-list-modal-added-toList grid-item two-thirds large--three-quarters">
-                                    <span ng-bind="'{{ 'wishlist.general.added_to_list' | t }}' + ' ' + selectedList.title"></span>
+                                    <span ng-bind="'{{ 'wishlist.general.added_to_list' | t }}' + ' ' + selectedList.name"></span>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                                     <span class="cart-image">
                                         <img ng-src="{% raw %}{{ dialogData.imageUrl }}{% endraw %}" ng-if="dialogData.imageUrl" />
                                         <div class="no-product-image" ng-if="!dialogData.imageUrl">
-                                            <img src="{{ 'no-image.svg' | asset_url }}" />
+                                            <img src="{{ 'images/no-image.svg' | asset_url }}" />
                                         </div>
                                     </span>
                                 </div>
@@ -94,7 +94,7 @@
                 <div class="cart-row">
                     <div class="grid">
                         <div class="grid-item text-right">
-                            <button ng-click="redirect('{{ 'account#/wishlist' | absolute_url }}')" class="btn" >
+                            <button ng-click="redirect('{{ 'account#/lists/myLists' | absolute_url }}' + (!!selectedList ? '/' + selectedList.name : ''))" class="btn" >
                                 <span>{{ 'wishlist.general.view_your_list' | t }}</span>
                             </button>
                             <button ng-click="close()" class="btn" >
